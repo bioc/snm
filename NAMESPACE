@@ -1,0 +1,10 @@
+import("lme4", "splines")
+export(snm)
+export(sim.singleChannel)
+export(sim.doubleChannel)
+export(sim.preProcessed)
+export(sim.refDesign)
+
+S3method("fitted","snm")
+S3method("plot","snm")
+S3method("summary","snm")
