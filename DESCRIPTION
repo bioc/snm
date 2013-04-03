@@ -1,7 +1,7 @@
 Package: snm
 Type: Package
 Title: Supervised Normalization of Microarrays
-Version: 1.8.0
+Version: 1.9.0
 Date: 2010-10-24
 Author: Brig Mecham <brig.mecham@sagebase.org> and John D. Storey <jstorey@princeton.edu>
 Maintainer:  Brig Mecham <brig.mecham@sagebase.org>
