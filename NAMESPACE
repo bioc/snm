@@ -1,4 +1,7 @@
-import("lme4", "splines")
+importFrom(corpcor, fast.svd)
+import(lme4)
+import(splines)
+
 export(snm)
 export(sim.singleChannel)
 export(sim.doubleChannel)

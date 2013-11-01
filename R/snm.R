@@ -1,7 +1,7 @@
 snm <-
 	function(raw.dat, bio.var=NULL, adj.var=NULL, int.var=NULL,
-                 weights=NULL, spline.dim = 4, num.iter = 10, nbins=50,
-                 rm.adj=FALSE, verbose=TRUE, diagnose=TRUE)
+                 weights=NULL, spline.dim = 4, num.iter = 10, lmer.max.iter=1000,
+                 nbins=20, rm.adj=FALSE, verbose=TRUE, diagnose=TRUE)
 {
 
   if(is.null(bio.var)) {
@@ -25,7 +25,7 @@ snm <-
       H0 = xx0 %*% solve(t(xx0) %*% xx0) %*% t(xx0)
       obs.fit$fit0 = t(H0 %*% t(snm.obj$dat))
       obs.fit$res1 = snm.obj$dat - obs.fit$fit0
-      snm.obj <- fit.model(obs.fit, snm.obj, basisSplineFunction)
+      snm.obj <- fit.model(obs.fit, snm.obj, basisSplineFunction, lmer.max.iter)
       snm.obj$dat <- snm.obj$r.dat - snm.obj$array.fx
       snm.obj$pi0s <- NULL
     } else {
@@ -37,7 +37,10 @@ snm <-
         obs.stat <- edge.glr(obs.fit, df1=snm.obj$df.full, df0=snm.obj$df.null, norm.pval=TRUE)
       	snm.obj$pi0 <- edge.qvalue(obs.stat$pval)$pi0
       	snm.obj$nulls <- calculate.nulls(obs.stat$pval, snm.obj$pi0)
-        snm.obj <- fit.model(obs.fit, snm.obj, basisSplineFunction)
+        ## These two steps should be included to follow the paper exactly
+        ## snm.obj$dat <- snm.obj$r.dat
+        ## obs.fit <- edge.fit(snm.obj, odp=FALSE)
+        snm.obj <- fit.model(obs.fit, snm.obj, basisSplineFunction, lmer.max.iter)
         snm.obj$dat <- snm.obj$r.dat - snm.obj$array.fx
       	obs.fit <- edge.fit(snm.obj, odp=FALSE)
       	if(diagnose) {

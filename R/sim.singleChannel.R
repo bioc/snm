@@ -4,7 +4,7 @@ sim.singleChannel <- function(seed) {
   na <- 50
   gmeans <- rchisq(np,1,2)
   gmeans[gmeans>15] <- runif(sum(gmeans>15),15,16)
-  data <- matrix(gmeans,nr=np,nc=na)
+  data <- matrix(gmeans,nrow=np,ncol=na)
   bio.var <- data.frame(groups=rep(c("A","B"),each=25))
   adj.var <- data.frame(batches=rep(c("A","B","C","D","E"),times=10),
       height=rnorm(50,1,0.5))
@@ -17,7 +17,7 @@ sim.singleChannel <- function(seed) {
   M <- data + group.effect + batches.effect + height.effect
   
   array.effect <- sim.intensity.dep(M, int.var$array, 2, list(func=rnorm, params=c(mean=0,sd=1)))
-  E <- matrix(rnorm(length(data),0,0.25), nr=nrow(data), nc=ncol(data))
+  E <- matrix(rnorm(length(data),0,0.25), nrow=nrow(data), ncol=ncol(data))
   Y <- M + array.effect + E
   true.nulls <- which(group.effect[,1] == group.effect[,26])
   

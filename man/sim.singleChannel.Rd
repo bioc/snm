@@ -37,7 +37,7 @@ this simulated data can be generated using the code in the examples section belo
   	\item{\code{int.var}}{a data frame of the intensity-dependent adjustment variables}
 }
 \author{
-  Brig Mecham <brig.mecham@sagebase.org>
+  Brig Mecham
 }
 \seealso{
 \code{\link{snm}}, \code{\link{sim.doubleChannel}}, \code{\link{sim.preProcessed}}, \code{\link{sim.refDesign}}

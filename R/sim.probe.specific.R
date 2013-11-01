@@ -24,7 +24,7 @@ sim.probe.specific <- function(data=NULL,variable=NULL,rows=NULL,sample.from=NUL
   
   x <- model.matrix(~-1+variable)  # Create model matrix for variable
   sample.this.many <- sum(lab==1) * ncol(x)  # Count how many probes to be modified
-  cfs <- matrix(0, nr=length(lab), nc=ncol(x))  #Initialize matrix of coefficient
+  cfs <- matrix(0, nrow=length(lab), ncol=ncol(x))  #Initialize matrix of coefficient
   # If sample.from is a list, sample from the function and pass the parameters.
   if(is.list(sample.from)) {
     #Estimate coefficients and add to coefficients matrix 

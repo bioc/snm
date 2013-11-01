@@ -6,7 +6,7 @@ snm.diagnostic.plot <-
   plot(rowMeans(snm.obj$M.pooled),
        bds,ylim=c(0,500), pch=19, yaxt="n",
        xlab="Estimated RNA Concentration", ylab="Probes per bin", main="Null Probes Per Bin")
-  axis(side=2, at=500, label=" 500+")
+  axis(side=2, at=500, labels=" 500+")
   axis(side=2, at=c(0,100,200,300,400))
   
   u <- fast.svd(obs.fit$res1,tol=0)

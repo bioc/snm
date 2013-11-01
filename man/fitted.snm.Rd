@@ -24,10 +24,10 @@ Returns the fitted values under the "null model" (adjustment variables only) and
 }
 \value{
   \item{fit0}{
-  Linear model fits when regression each probe's normalized data on the null model, \code{~adj.var}.
+  Linear model fits when regressing each probe's normalized data on the null model, \code{~adj.var}.
   }
   \item{fit1}{
-  Linear model fits when regression each probe's normalized data on the full model, \code{~adj.var+bio.var}.  
+  Linear model fits when regressing each probe's normalized data on the full model, \code{~adj.var+bio.var}.  
   }
 }
 \references{

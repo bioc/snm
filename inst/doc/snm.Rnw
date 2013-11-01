@@ -87,7 +87,7 @@
 
 \title{Bioconductor's snm package}
 \author{Brig Mecham and John D. Storey\\
-email: \texttt{brig.mecham@sagebase.org} and \texttt{jstorey@princeton.edu}}
+email: \texttt{jstorey@princeton.edu}}
 
 \maketitle
 \bibliographystyle{plain}
@@ -212,7 +212,8 @@ The following options are also available:
 \item[weights:] In certain instances the analyst might be aware of a set of probes that should be ignored when  estimating intensity-dependent effects.  For example, probes influenced by  latent structure, surface artifacts, or some other source of variation that is not included in the model. The {\tt weights} option is designed for this situation.  By simply setting the weight for these probes to 0 the analyst can force the algorithm to ignore these values when estimating intensity-dependent effects. 
 \item[spline.dim:] The degrees of freedom of the spline utilized for intensity-dependent effects.
 \item[nbins:] The number of bins formed when fitting intensity-dependent effects.  This is essentially for computational speed.
-\item[num.iter:] The number of iterations to perform.  This is utilized rather than a numerical convergence criterion. 
+\item[num.iter:] The number of snm model fitting iterations to perform.  This is utilized rather than a numerical convergence criterion. 
+\item[lmer.max.iter:] Maximum number of \Rfunction{lmer} iterations that are permitted when fitting the random effects model to the intensity-dependent effects (see the {\tt lme4} package for details). 
 \item[rm.adj:] This option is used to control whether or not the probe-specific adjustment variables should be removed from the normalized data returned by the \Rfunction{snm} function call.  If the analyst will perform subsequent formal statistical inference (e.g., hypotheses testing), then  this option should be set to FALSE.  If the analyst will perform clustering or network analysis, then this option should be set to TRUE.
 \item[verbose:] If set to TRUE, then the iteration number is printed to the R console, and the above plots are displayed for each iteration.
 \item[diagnose:] If set to TRUE, then diagnostic plots are displayed for each iteration. 
@@ -351,7 +352,7 @@ ks.test(snm.obj5$pval[preProcessed$true.nulls],"punif")
 \end{verbatim}
 
 \section{Diagnosing the \Rfunction{snm} output}\label{Diagnosing}
-The \Rfunction{snm} methodology requires that the analyst has specified a well behaved study-specific model. When this is not  the case the normalized data set can lead to biased inference as shown in \cite{mecham2010}. To help identify when the assumed model is incorrect we provide a plot that displays the progression of the model fit over the prescribed iterations, which is activated with the \Rfunction{snm} argument {\tt diagnose=TRUE}.  An example plot from an iteration of the single channel normalization from section \ref{egSC} is presented in figure \ref{fig:diagPlot1}.
+The \Rfunction{snm} methodology requires that the analyst has specified a well behaved study-specific model. When this is not  the case the normalized data set can lead to biased inference as shown in \cite{mecham2010}. To help identify when the assumed model is incorrect we provide a plot that displays the progression of the model fit over the prescribed iterations, which is activated with the \Rfunction{snm} argument {\tt diagnose=TRUE}.  An example plot from an iteration of the single channel normalization from section \ref{egSC} is presented in figure \ref{fig:diagPlot1}. \\
 
 \begin{figure}[pt]
   \begin{center}
@@ -411,6 +412,21 @@ plot(snm.svd$v[,1], singleChannel$adj.var[,6])
 \end{verbatim}
 
 \section{Simulation Details}\label{simDetails}
+The following functions can be used to simulate data and that show explicit examples of single and double channel arrays. \\
+
+\begin{verbatim}
+sim.singleChannel
+sim.doubleChannel
+sim.preProcessed
+sim.refDesign
+\end{verbatim}
+
+The examples can be seen by accessing the help files, for example:
+
+\begin{verbatim}
+?sim.singleChannel
+\end{verbatim}
+
 \subsection{Single Channel Data}\label{simDetailsSC}
 Data were simulated for a total of 25,000 probes and 50 arrays.  The biological variable of interest is a dichotomous variable
 defining two groups with 25 arrays sampled from each group.  The 50 arrays are split into 5 batches of 10, with each batch containing 
@@ -443,8 +459,7 @@ array and dye effects.  Data were simulated assuming a uniform reference design 
 The reference channel consists of a single reference RNA population. The experimental channel measures a 
 dichotomous biological variable specifying two groups (Group 1 and Group 2), with 10 samples per group.  The baseline probe intensities  
 were sampled from a chi(1,2) distribution.  Any baseline intensities greater than 15 were set to a random value from the 
-interval [15,16].  The random variation terms were sampled from a Normal(0,0.25) and the array and dye functions were defined by randomly sampling coefficients 
-for a two-dimensional B-spline basis functions from a Normal(0,1).
+interval [15,16].  The random variation terms were sampled from a Normal(0,0.25) and the array and dye functions were defined by randomly sampling coefficients for a two-dimensional B-spline basis functions from a Normal(0,1). \\
 
 A randomly selected subset of 30\% of the probes was defined as influenced by the biological group variable.  The magnitude of the biological 
 effects were sampled from a Normal(1,0.3) distribution. An instance of this simulated data can be generated using the code in the examples section below. 

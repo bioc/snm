@@ -11,8 +11,8 @@ Implement Supervised Normalization of Microarrays on a gene
 }
 \usage{
 snm(raw.dat, bio.var=NULL, adj.var=NULL, int.var=NULL,
-    weights=NULL, spline.dim = 4, num.iter = 10, nbins=50,
-    rm.adj=FALSE, verbose=TRUE, diagnose=TRUE)
+    weights=NULL, spline.dim = 4, num.iter = 10, lmer.max.iter=1000,
+    nbins=20, rm.adj=FALSE, verbose=TRUE, diagnose=TRUE)
 }
 \arguments{
   \item{raw.dat}{
@@ -35,7 +35,10 @@ A vector of length \eqn{m}.  Values unchanged by algorithm, used to control the 
 Dimension of basis spline used for array effects.
 }
   \item{num.iter}{
-Number of iterations to run.
+Number of snm model fit iterations to run.
+}
+  \item{lmer.max.iter}{
+Number of \code{\link[lme4]{lmer}} iterations that are permitted.  Set \code{lmer.max.iter=NULL} if no maximum is desired.
 }
   \item{nbins}{
 Number of bins used by binning strategy.  Array effects are calculated from a \eqn{nbins} x \eqn{n} data matrix, where the \eqn{(i,j)} value is equal to that bin \eqn{i}'s average intensity on array \eqn{j}.
@@ -108,7 +111,7 @@ Mecham BH, Nelson PS, Storey JD (2010) Supervised normalization of
 microarrays. Bioinformatics, 26: 1308-1315.
 }
 \author{
-Brig Mecham <brig.mecham@sagebase.org> and John D. Storey <jstorey@princeton.edu>
+Brig Mecham and John D. Storey <jstorey@princeton.edu>
 }
 \note{
 It is necessary for adj.var and adj.var+bio.var to be valid model matrices (e.g., the models cannot be over-determined).  
