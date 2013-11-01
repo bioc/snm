@@ -22,7 +22,7 @@ sim.refDesign <- function(seed) {
 	ret.obj <- 
 			list(raw.data=Y, 
 					bio.var=model.matrix(~groups,data=bio.var),
-					adj.var=NULL,
+					adj.var=matrix(rep(1,na),ncol=1,dimnames=list(NULL,"Intercept")),
 					int.var=int.var,
 					true.nulls=true.nulls)
 	ret.obj

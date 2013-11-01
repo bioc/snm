@@ -23,8 +23,9 @@ were sampled from a chi(1,2) distribution.  Any baseline intensities greater tha
 interval [15,16].  The random variation terms were sampled from a Normal(0,0.25) and the array and dye functions were defined by randomly sampling coefficients 
 for a two-dimensional B-spline basis functions from a Normal(0,1).
 
-A randomly selected subset of 30\% of the probes was defined as influenced by the biological group variable.  The magnitude of the biological 
-effects were sampled from a Normal(1,0.3) distribution. An instance of this simulated data can be generated using the code in the examples section below. 
+A randomly selected subset of 30\% of the probes was defined as influenced by the biological group variable.  
+The magnitude of the biological effects were sampled from a Normal(1,0.3) distribution. An instance of this 
+simulated data can be generated using the code in the examples section below. 
 }
 \value{
  	\item{\code{raw.data}}{a 25,000 by 50 matrix of simulated data generated according to the description above.}
@@ -46,11 +47,22 @@ refChannel <- sim.refDesign(12347)
 snm.obj <- snm(refChannel$raw.data,refChannel$bio.var, refChannel$adj.var, refChannel$int.var)
 ks.test(snm.obj$pval[refChannel$true.nulls],"punif")
 
+# this is a different model formulation
+# where reference channel is not included
+# in bio.var
+bio.var2 = matrix(c(rep(-1,10), rep(1, 10), rep(0,20)), ncol=1, dimnames=list(NULL, "treatment"))
+adj.var2 = matrix(c(rep(1,40), rep(1,20), rep(0,20)), ncol=2, byrow=FALSE, dimnames=list(NULL, c("intercept", "target1ref0")))
+# compare bio.var2 to refChannel$bio.var and adj.var2 to refChannel$adj.var
+snm.obj <- snm(refChannel$raw.data, bio.var2, adj.var2, refChannel$int.var)
+ks.test(snm.obj$pval[refChannel$true.nulls],"punif")
+
 # reference design on log ratio data
+# that is, log(target/ref) data 
 refChannel <- sim.refDesign(12347)
 refChannel$raw.data = refChannel$raw.data[,1:20]-refChannel$raw.data[,21:40]
 # removing reference channel variables
 refChannel$bio.var = refChannel$bio.var[1:20,-3]
+refChannel$adj.var = matrix(refChannel$adj.var[1:20,], ncol=1)
 refChannel$int.var = data.frame(refChannel$int.var[1:20,1])
 snm.obj <- snm(refChannel$raw.data,refChannel$bio.var, refChannel$adj.var, refChannel$int.var)
 ks.test(snm.obj$pval[refChannel$true.nulls],"punif")
