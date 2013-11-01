@@ -1,0 +1,11 @@
+citHeader("To cite snm in publications, please use:")
+
+citEntry(entry = "article",
+  author = "B. H. Mecham and P. S. Nelson and J. D. Storey",
+  title = "Supervised normalization of microarrays",
+  year = "2010",
+  journal = "Bioinformatics",
+  volume = "26",
+  pages = "1308-1315",
+  textVersion = "Mecham BH, Nelson PS, Storey JD (2010) Supervised normalization of microarrays. Bioinformatics, 26: 1308-1315."
+)
