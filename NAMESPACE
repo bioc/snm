@@ -1,4 +1,4 @@
-import("lme4", "splines")
+import("corpcor", "lme4", "splines")
 export(snm)
 export(sim.singleChannel)
 export(sim.doubleChannel)

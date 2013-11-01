@@ -29,7 +29,7 @@ sim.intensity.dep <- function(data=NULL,variable=NULL,spline.dim=NULL,sample.fro
   x <- model.matrix(~-1+variable)  # Create model matrix for variable
   z <- ns(seq(min(data),max(data),length=100), df=spline.dim, Boundary.knots=c(min(data)-1,max(data)+1))
   cfs.mat <- 0 * data
-  spline.coefficients <- matrix(0,nr=ncol(x), nc=spline.dim)
+  spline.coefficients <- matrix(0, nrow=ncol(x), ncol=spline.dim)
   for(i in 1:ncol(x)) { 
     spline.coefficients[i,] <- do.call(sample.from$func, as.list(c(n=ncol(z), sample.from$params)))
   }

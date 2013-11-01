@@ -1,3 +1,9 @@
 version 1.0:
 
-  o Initial release of snm.
+- Initial release of snm.
+
+version 1.11:
+
+- Now uses lme4 R (>= 1.0)
+- Default nbins=20
+- New argument lmer.max.iter allows one to cap the number of lmer iterations

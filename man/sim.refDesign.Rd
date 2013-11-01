@@ -34,13 +34,12 @@ effects were sampled from a Normal(1,0.3) distribution. An instance of this simu
   	\item{\code{int.var}}{a data frame of the intensity-dependent adjustment variables}
 }
 \author{
-Brig Mecham <brig.mecham@sagebase.org> and John D. Storey <jstorey@princeton.edu>
+Brig Mecham and John D. Storey <jstorey@princeton.edu>
 }
 \seealso{
 \code{\link{snm}}, \code{\link{sim.singleChannel}}, \code{\link{sim.doubleChannel}}, \code{\link{sim.preProcessed}}
 }
 \examples{
-\dontrun{
 # reference design on channel level data
 # reference channel is included in bio.var
 refChannel <- sim.refDesign(12347)
@@ -55,6 +54,5 @@ refChannel$bio.var = refChannel$bio.var[1:20,-3]
 refChannel$int.var = data.frame(refChannel$int.var[1:20,1])
 snm.obj <- snm(refChannel$raw.data,refChannel$bio.var, refChannel$adj.var, refChannel$int.var)
 ks.test(snm.obj$pval[refChannel$true.nulls],"punif")
-}
 }
 \keyword{datagen}

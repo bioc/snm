@@ -34,7 +34,7 @@ from a Normal(1,0.1). An instance of this simulated data can be generated using 
   	\item{\code{int.var}}{a data frame of the intensity-dependent adjustment variables}
 }
 \author{
-Brig Mecham <brig.mecham@sagebase.org>
+Brig Mecham
 }
 \seealso{
 \code{\link{snm}}, \code{\link{sim.singleChannel}}, \code{\link{sim.preProcessed}}, \code{\link{sim.refDesign}}

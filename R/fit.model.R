@@ -1,5 +1,5 @@
 fit.model <-
-	function(obs.fit, snm.obj, basisSplineFunction)
+	function(obs.fit, snm.obj, basisSplineFunction, lmer.max.iter=500)
 {
   snm.obj$M <- snm.obj$dat - obs.fit$res1
   snm.obj$M[snm.obj$nulls,] <- obs.fit$fit0[snm.obj$nulls,]
@@ -26,19 +26,27 @@ fit.model <-
   expObj <- makeDataObject(Y.pooled, np, snm.obj, exp,bins)
   expObj$sp <- as.matrix(bSM.model)
   model.objects <- make.ref.model.matrices(snm.obj, exp)
+
+  lmerCtrl <- lmerControl(optimizer = "bobyqa", optCtrl=list(maxfun = lmer.max.iter))
+  yourWarn <- getOption("warn")
+  options(warn=-1)
+  lf <- do.call("lmer", list(formula=model.objects$ZF, data=expObj, REML=TRUE, control = lmerCtrl, 
+                             verbose=FALSE, subset=1:nrow(expObj),weights=expObj$weights))
+  options(warn=yourWarn)
   
-  lf <- do.call("lmer", list(model.objects$ZF, expObj, NULL,TRUE,list(),NULL,FALSE, FALSE,1:nrow(expObj),expObj$weights))
-  for(i in 1:ncol(snm.obj$int.var)) { 
-    lf$FL$trms[[i]]$ST <- matrix(0,nr=1,nc=1)
-    rownames(lf$FL$trms[[i]]$ST) <- colnames(lf$FL$trms[[i]]$ST) <- paste("spline",i,sep="")
-  }
-  rff <- do.call(lme4:::lmer_finalize,lf)
+#  for(i in 1:ncol(snm.obj$int.var)) { 
+#    lf$FL$trms[[i]]$ST <- matrix(0,nr=1,nc=1)
+#    rownames(lf$FL$trms[[i]]$ST) <- colnames(lf$FL$trms[[i]]$ST) <- paste("spline",i,sep="")
+#  }
+#  rff <- do.call(lme4:::lmer_finalize,lf)
+
+  rff <- ranef(lf)
 	
 # Add useful variables to snm.obj
-  snm.obj$E.pooled <- matrix(rff@resid, nr=dim(Y.pooled)[1])
+  snm.obj$E.pooled <- matrix(residuals(lf), nrow=dim(Y.pooled)[1])
   snm.obj$Y.pooled <- Y.pooled
   snm.obj$M.pooled <- M.pooled
-  snm.obj$rff <- rff@ranef
+  snm.obj$rff <- rff
   snm.obj$bin.densities <- sapply(bins,length)
   
   snm.obj$array.fx <- calcArrayEffects(rff, basisSplineFunction, snm.obj, model.objects, snm.obj$M, lf)

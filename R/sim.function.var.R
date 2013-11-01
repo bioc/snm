@@ -20,7 +20,7 @@ sim.function.var <- function(data=NULL,variable=NULL,rows=NULL, sample.from=NULL
   
   x <- model.matrix(~-1+Z)  # Create model matrix for variable
   sample.this.many <- sum(lab==1) * ncol(x)  # Count how many probes to be modified
-  cfs <- matrix(0, nr=length(lab), nc=ncol(x))  #Initialize matrix of coefficients
+  cfs <- matrix(0, nrow=length(lab), ncol=ncol(x))  #Initialize matrix of coefficients
   
   if(is.list(sample.from)) {
     for(spd in 1:length(sample.from)) { 

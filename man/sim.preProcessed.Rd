@@ -23,7 +23,7 @@ sim.preProcessed(seed)
   	\item{\code{int.var}}{set to NULL}
 }
 \author{
-Brig Mecham <brig.mecham@sagebase.org> 
+Brig Mecham 
 }
 \seealso{
 \code{\link{snm}}, \code{\link{sim.doubleChannel}}, \code{\link{sim.singleChannel}}, \code{\link{sim.refDesign}}
