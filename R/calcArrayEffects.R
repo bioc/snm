@@ -10,7 +10,7 @@ calcArrayEffects <-
 #  }
 
   ars <- sapply(1:ncol(M.matrix), function(i) {
-    		mREFs <- sapply(1:length(rff), function(j) {
+    		mREFs <- sapply(names(rff), function(j) {
       				model.objects$F.mats[[j]][i, ] %*% as.matrix(rff[[j]])
     				})
     		bSM <- predict(basisSplineFunction, M.matrix[, as.numeric(i)])
