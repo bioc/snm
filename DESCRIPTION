@@ -1,7 +1,7 @@
 Package: snm
 Type: Package
 Title: Supervised Normalization of Microarrays
-Version: 1.27.0
+Version: 1.28.0
 Author: Brig Mecham and John D. Storey <jstorey@princeton.edu>
 Description: SNM is a modeling strategy especially designed for
         normalizing high-throughput genomic data. The underlying
